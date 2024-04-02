@@ -3,7 +3,7 @@ resource "aws_key_pair" "terraform-lab" {
   public_key = file(var.ssh_pubkey_file)
 }
 
-resource "aws_instance" "bastion" {
+resource "aws_instance" "terraform-instance" {
   ami                         = lookup(var.amis, var.region)
   instance_type               = "${var.instance_type}"
   key_name                    = aws_key_pair.terraform-lab.key_name
@@ -11,6 +11,6 @@ resource "aws_instance" "bastion" {
   security_groups            = [aws_security_group.ec2.id]
   subnet_id                   = aws_subnet.private-subnets[0].id
   tags = {
-    Name = "Bastion"
+    Name = "terraform-instance"
   }
 }
